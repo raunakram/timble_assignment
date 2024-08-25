@@ -15,9 +15,9 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.email')  
-    movie = serializers.ReadOnlyField(source='movie.title') 
 
+    movie = serializers.PrimaryKeyRelatedField(queryset=Movie.objects.all())
     class Meta:
         model = Review
         fields = ['id', 'movie', 'user', 'rating', 'comment', 'created_at', 'updated_at']
+        

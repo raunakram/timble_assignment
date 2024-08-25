@@ -10,6 +10,8 @@ from .models import Review
 from .serializers import ReviewSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .pagination import StandardResultsSetPagination
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 
 
@@ -83,7 +85,17 @@ class ReviewViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)  
+        # Ensure the movie ID is provided and valid
+        movie_id = self.request.data.get('movie')
+        if not movie_id:
+            raise ValidationError("Movie ID is required.")
+
+        # Validate that the movie exists
+        if not Movie.objects.filter(id=movie_id).exists():
+            raise ValidationError("Invalid movie ID.")
+        
+        # Save the review with the current user
+        serializer.save(user=self.request.user)
 
     def get_queryset(self):
         # Filter the reviews by the current logged-in user
