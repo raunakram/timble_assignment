@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'movie_data', 
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
