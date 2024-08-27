@@ -73,6 +73,11 @@ http://127.0.0.1:8000/movies/reviews/?page=2
 
 
 
+To use swagger:
+goto this url: http://127.0.0.1:8000/swagger/
+
+
+
 
 
 
